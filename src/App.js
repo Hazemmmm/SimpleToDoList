@@ -1,25 +1,54 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+
+    this.state = {
+      item: "",
+      items: [], //
+    };
+
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.sumbitItem = this.sumbitItem.bind(this);
+  }
+
+  sumbitItem() {
+    let item = this.state.item;
+    let items = this.state.items;
+
+    items.push(item);
+
+    this.setState({ items: items });
+  }
+
+  handleInputChange(event) {
+    let name = event.target.name;
+    let value = event.target.value;
+
+    this.setState({ [name]: value });
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <h2>TO DO LIST</h2>
+
+        <input
+          type="text"
+          name="item"
+          onChange={this.handleInputChange}
+        ></input>
+
+        <button onClick={this.sumbitItem}>Sumbit it!</button>
+
+        {this.state.items.map((item) => {
+          return <p>{item}</p>;
+        })}
+      </div>
+    );
+  }
 }
 
 export default App;
